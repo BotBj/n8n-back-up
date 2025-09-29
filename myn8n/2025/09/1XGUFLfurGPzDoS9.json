@@ -1,0 +1,209 @@
+{
+  "active": false,
+  "connections": {
+    "Content Creator Agent": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Try Again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Content Creator Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "Content Creator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Creator Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-17T19:55:22.630Z",
+  "id": "1XGUFLfurGPzDoS9",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Content Creator Agent zimé",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query}}",
+        "options": {
+          "systemMessage": "=# Présentation générale\nVous êtes un rédacteur de blog IA expérimenté, spécialisé dans la création de contenus attrayants, bien structurés et informatifs. Votre style rédactionnel est clair, convaincant et adapté au public cible. Vous optimisez la lisibilité, le référencement et la valeur ajoutée, en veillant à ce que les blogs soient bien documentés, originaux et sans fioritures.\n\n## Outils\nTavily - Utilisez cet outil pour effectuer des recherches sur le web concernant le sujet demandé pour l'article de blog.\n\n## Exigences relatives au blog\nFormatez tout le contenu du blog en HTML, en utilisant les en-têtes (<h1>, <h2>), les paragraphes (<p>), les puces (<ul><li>) et les liens (<a href=\"URL\">) appropriés pour les citations. Toutes les citations provenant de l'outil Tavily doivent être conservées, avec des hyperliens cliquables afin que les lecteurs puissent accéder aux sources originales.\n\nConservez un ton naturel et humain, utilisez des structures de phrases variées et incluez des exemples ou des données pertinents si nécessaire. Structurez le contenu de manière à faciliter la lecture, avec des paragraphes concis et un enchaînement logique. Veillez toujours à l'exactitude des faits et adaptez le ton à la marque ou à l'objectif visé."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -448,
+        80
+      ],
+      "id": "0a824b8d-efc7-4c46-a9d2-bcc1b4e87634",
+      "name": "Content Creator Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14d9076e-27ea-4846-8b44-f83cf4022b9e",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "57411592-b9df-42b7-971f-c1df359abae9",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f2a8ff2d-6b59-4ad6-a2e7-8705354f4105",
+              "name": "response",
+              "value": "Error occurred. Please try again.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        192
+      ],
+      "id": "d862ae70-77d4-4d4c-affa-5a9bcc3f85d7",
+      "name": "Try Again"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -704,
+        80
+      ],
+      "id": "d50350eb-44c4-4192-8d13-35b06910aa9b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        288
+      ],
+      "id": "a0a2e7d6-e0f6-4616-89b1-617569c63864",
+      "name": "Search in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "Gow32FyH4V1mPlhN",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        288
+      ],
+      "id": "5e485618-d6ba-41fc-b6c5-00a5a91b458e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-back-up",
+  "repo_owner": "BotBj",
+  "repo_path": "myn8n/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-17T19:55:22.632Z",
+      "updatedAt": "2025-09-17T19:55:22.632Z",
+      "role": "workflow:owner",
+      "workflowId": "1XGUFLfurGPzDoS9",
+      "projectId": "rtwT9HNaRzX30hVn"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-09-12T12:55:14.589Z",
+      "updatedAt": "2025-09-12T12:55:14.589Z",
+      "id": "PPF2lxJehiB45aRa",
+      "name": "Jarvis"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-17T19:55:22.630Z",
+  "versionId": "0e753797-de57-4943-861f-1f9d3c77028b"
+}
