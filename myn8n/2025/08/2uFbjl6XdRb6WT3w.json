@@ -1,0 +1,1077 @@
+{
+  "active": true,
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Appointment Booking",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Router Agent",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Student Guide & Course",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "FAQ",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "agent_secour",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set credentials": {
+      "main": [
+        [
+          {
+            "node": "Router Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Student Guide & Course",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Appointment Booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FAQ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "agent_secour",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "book_appointment1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Appointment Booking",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_university_courses": {
+      "ai_tool": [
+        [
+          {
+            "node": "Student Guide & Course",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pre_register": {
+      "ai_tool": [
+        [
+          {
+            "node": "Student Guide & Course",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save_student_profile": {
+      "ai_tool": [
+        [
+          {
+            "node": "Student Guide & Course",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Student Guide & Course",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Appointment Booking",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document in Google Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "FAQ",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Router Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agent_secour",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "FAQ",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAQ": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appointment Booking": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Student Guide & Course": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agent_secour": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-16T12:58:37.399Z",
+  "id": "2uFbjl6XdRb6WT3w",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "HECM",
+  "nodes": [
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.session_id }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -944,
+        96
+      ],
+      "id": "ba303618-7349-4762-8b75-3baf89a3b0b6",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=The date of today is {{$now}}\n\nTu es un système expert de détection d’intention et de routage pour un assistant virtuel universitaire nommé HECM. Ta mission est d’analyser **l’historique complet de la conversation**, le contexte ainsi que le **dernier message de l’utilisateur** afin d’identifier l’intention dominante et de rediriger vers **l’agent approprié**.\n\nTu collabores avec **quatre agents** spécialisés :\n\n- **STUDENT_GUIDE** : Agent de Qualification et Orientation\n- **APPOINTMENT_BOOK** : Agent de Prise de Rendez-vous\n- **FAQ** : Agent de Réponses Académiques\n- **GENERAL_ASSIST** : Agent de redirection générale (point de chute)\n\n---\n\n## 🎯 Catégories d’intention\n\n### **STUDENT_GUIDE**\nL’utilisateur exprime un **intérêt pour un programme, un parcours, une orientation, ou souhaite être conseillé** pour ses études.\n\n- Exemples :\n  - « Je cherche une formation en informatique. »\n  - « J’aimerais savoir quel parcours me convient. »\n  - « Que proposez-vous comme filières après le bac ? »\n  - « Je veux reprendre mes études. »\n- « Je veux faire une pré-inscription. »\n\n> 💡 Si l’utilisateur répond à une question liée à la qualification (ex : ses objectifs, son parcours, ses intérêts), redirige aussi vers **STUDENT_GUIDE**.\n\n---\n\n### **APPOINTMENT_BOOK**\nL’utilisateur souhaite **prendre, modifier ou annuler un rendez-vous**, ou fournit des informations (nom, contact, date, heure) dans le cadre d’une demande de rendez-vous.\n\n- Exemples :\n  - « Je suis disponible demain à 15h. »\n  - « Voici mon numéro pour fixer le rendez-vous. »\n  - « Est-ce possible de déplacer mon rendez-vous à vendredi ? »\n\n> 💡 Toutes les discussions visant à formuler ou finaliser une demande de rendez-vous vont vers **APPOINTMENT_BOOK**.\n\n---\n\n### **FAQ**\nL’utilisateur pose une **question spécifique sur les services académiques** de l’établissement :\n- cours\n- filières\n- bourses\n- inscription\n- scolarité\n- calendrier académique\n- dossier d’inscription\n- promotion\n- contacts utiles\n\n- Exemples :\n  - « Où puis-je déposer mon dossier d’inscription ? »\n  - « Quelles sont les dates de la rentrée ? »\n  - « Comment fonctionne le système de bourses ? »\n  - « À qui m’adresser pour la scolarité ? »\n\n> 💡 Les demandes factuelles, administratives ou liées à la vie académique vont ici.\n\n---\n\n### **GENERAL_ASSIST**\nL’utilisateur :\n- Engage une discussion **sans lien clair** avec les études ou les rendez-vous\n- Pose une **question hors sujet**\n- Envoie une **salutation**, un **remerciement**, ou un **message vide**\n- A un comportement non conforme ou sans intention claire\n\n- Exemples :\n  - « Bonjour »\n  - « Merci beaucoup ! »\n  - « Quel temps fait-il aujourd’hui ? »\n  - « ... »\n  - « Raconte-moi une blague. »\n\n> 💡 Si aucune intention ne correspond clairement aux trois autres, redirige ici.\n\n---\n\n## 🧠 Règles de décision\n\n- Utilise **l’historique complet** de la conversation pour comprendre le contexte.\n- Si l’utilisateur **répond à une question d’un agent actif**, maintiens la continuité du processus en redirigeant vers le même agent (**STUDENT_GUIDE** ou **APPOINTMENT_BOOK**).\n- En cas de **doute, de salutation ou de message vague**, choisis systématiquement **GENERAL_ASSIST**.\n- Ne considère **que l’intention explicite** ou implicite de l’utilisateur, pas la forme du message.\n- Ignore la politesse ou les formules sociales : concentre-toi uniquement sur l’intention fonctionnelle.\n\n---\n\n## 🧾 Sortie obligatoire\n\nTa sortie doit être **strictement** un **seul mot** parmi :\n\n- `STUDENT_GUIDE`\n- `APPOINTMENT_BOOK`\n- `FAQ`\n- `GENERAL_ASSIST`\n\nAucune autre réponse ne doit être générée.\n\n---\n\n## 🔁 Exemples\n\n| Message de l’utilisateur | Sortie attendue |\n|--------------------------|------------------|\n| « Je veux suivre un BTS en alternance » | `STUDENT_GUIDE` |\n| « Est-ce que les bourses couvrent les frais ? » | `FAQ` |\n| « Je suis dispo mardi pour un RDV » | `APPOINTMENT_BOOK` |\n| « Salut ! » | `GENERAL_ASSIST` |\n| « Mon contact : 0612345678 » (pendant une prise de RDV) | `APPOINTMENT_BOOK` |\n| « Merci pour votre aide » | `GENERAL_ASSIST` |\n| « À qui je m’adresse pour mon relevé de notes ? » | `FAQ` |\n| « J’ai fait un DUT info et je cherche une licence » | `STUDENT_GUIDE` |\n\n---\n\n## Règle stricte\n\nTa sortie doit être **un seul mot uniquement** :\n`STUDENT_GUIDE`, `APPOINTMENT_BOOK`, `FAQ`, ou `GENERAL_ASSIST`.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -1360,
+        -288
+      ],
+      "id": "e0cec7ec-c839-438c-b8c8-fac17b8f329f",
+      "name": "Router Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1b97d0f-191d-4815-904e-2482aa981fff",
+              "name": "body.message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "d0d33ffc-6e79-4a76-8273-34728055a1e5",
+              "name": "body.timestamp",
+              "value": "={{ $json.body.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "f8c124fe-8a51-4893-8e53-033fc1de896b",
+              "name": "body.session_id",
+              "value": "={{ $json.body.session_id }}",
+              "type": "string"
+            },
+            {
+              "id": "8b9655dc-bccd-41a2-a311-5263cad032b8",
+              "name": "body.user_id",
+              "value": "={{ $json.body.user_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "={{(() => {   const date = new Date();   return date.toLocaleString('fr-FR', {     weekday: 'long',     year: 'numeric',     month: 'long',     day: 'numeric',     hour: '2-digit',     minute: '2-digit',     second: '2-digit',     timeZone: $json.metadata?.clientCurrentTimezone || 'Europe/Paris'   }); })()}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1728,
+        -288
+      ],
+      "id": "7ec0d53e-9ef8-44cd-a3f3-24549bf6d9d1",
+      "name": "Set credentials"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "STUDENT_GUIDE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9524490e-ce46-4e10-9fc9-71bdd4aa0b2f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Student Guide & Course"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "23b9e7d4-fac8-4f20-aef0-9e612a38727a",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "APPOINTMENT_BOOK",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Appointment Booking"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f8dd5bb4-1778-45fc-8102-b04e8d774b34",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "FAQ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=faq"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -800,
+        -320
+      ],
+      "id": "ff38da72-8a77-4aa1-a204-deaa014e31ee",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"book_appointment\",\n  \"description\": \"Enregistre une nouvelle demande de rendez-vous dans le Google Sheet dédié. L'outil prend en entrée les informations de la demande fournies par l'étudiant. Il est utilisé une seule fois après que l'utilisateur a validé les détails du rendez-vous souhaité. L'outil ne vérifie pas la disponibilité en temps réel, mais enregistre simplement la demande pour que le secrétariat puisse la traiter par la suite.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"nom_etudiant\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom complet de l'étudiant.\"\n      },\n      \"contact_etudiant\": {\n        \"type\": \"string\",\n        \"description\": \"Le numéro de contact de l'étudiant.\"\n      },\n      \"nom_personnel_demande\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom du personnel avec qui l'étudiant souhaite s'entretenir, s'il a été spécifié.\"\n      },\n      \"date_souhaitee\": {\n        \"type\": \"string\",\n        \"description\": \"La date souhaitée pour le rendez-vous (au format ISO 8601 si possible, par ex. '2025-08-05').\"\n      },\n      \"heure_souhaitee\": {\n        \"type\": \"string\",\n        \"description\": \"L'heure souhaitée pour le rendez-vous (par ex. '14:30').\"\n      },\n      \"objet_rdv\": {\n        \"type\": \"string\",\n        \"description\": \"L'objet de la rencontre (par exemple, 'conseil de carrière', 'question sur un cours').\"\n      }\n    },\n    \"required\": [\n      \"nom_etudiant\",\n      \"email_etudiant\",\n      \"date_souhaitee\",\n      \"heure_souhaitee\",\n      \"objet_rdv\"\n    ]\n  }\n}",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8",
+          "mode": "list",
+          "cachedResultName": "Base_HECM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 567821903,
+          "mode": "list",
+          "cachedResultName": "Rencontre_conseiller",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit#gid=567821903"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date_enregistrement": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date_enregistrement', ``, 'string') }}",
+            "Nom_etudiant": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nom_etudiant', ``, 'string') }}",
+            "Contact_etudiant": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_etudiant', ``, 'string') }}",
+            "Nom_personnel_demande": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nom_personnel_demande', ``, 'string') }}",
+            "Date_souhaitee": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date_souhaitee', ``, 'string') }}",
+            "Heure_souhaitee": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Heure_souhaitee', ``, 'string') }}",
+            "Objet_rdv": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Objet_rdv', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Nom_etudiant"
+          ],
+          "schema": [
+            {
+              "id": "Date_enregistrement",
+              "displayName": "Date_enregistrement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom_etudiant",
+              "displayName": "Nom_etudiant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact_etudiant",
+              "displayName": "Contact_etudiant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom_personnel_demande",
+              "displayName": "Nom_personnel_demande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date_souhaitee",
+              "displayName": "Date_souhaitee",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Heure_souhaitee",
+              "displayName": "Heure_souhaitee",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Objet_rdv",
+              "displayName": "Objet_rdv",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -208,
+        -480
+      ],
+      "id": "67c8e737-863b-4ccf-a9b1-cd6b89fa344f",
+      "name": "book_appointment1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=---\n\n### 🧠 **Prompt système complet – Agent \"Guide et Cours\"** :\n\n> Vous êtes un assistant académique virtuel représentant HECM. Votre rôle est d’aider les étudiants à trouver leur programme de formation idéal, en engageant une conversation professionnelle, bienveillante et structurée.\n>\n> 🎯 Votre mission suit ces **8 étapes précises**. Chaque étape doit être respectée et complétée, sauf si une information est déjà fournie.\n>\n> ---\n>\n> ### 🧭 **Étape 1 – Salutation & Calibration**\n>\n> * Saluez chaleureusement .\n> * Expliquez brièvement votre rôle.\n> * Calibrez le type d’échange :\n>\n>   > « Bonjour ! Je suis là pour vous aider à trouver le programme académique qui vous correspond. Puis-je vous poser quelques questions rapides pour mieux comprendre votre profil ?»\n>\n> ---\n>\n> ### 🧭 **Étape 2 – Qualification (collecte d’infos essentielles)**\n>\n> Ne posez qu’une seule question à la fois, et uniquement pour les infos manquantes ou incertaines. Si l’utilisateur donne plusieurs infos spontanément, traitez-les toutes.\n>\n> Collectez les données suivantes dans cet ordre :\n>\n> 1. **Centres d’intérêt académiques** (ex : Informatique, Droit, Commerce…)\n> 2. **Objectifs de carrière à long terme** (ex : Devenir ingénieur logiciel, Créer mon entreprise…)\n> 3. **Niveaux dans matières clés**, liées à l’objectif exprimé. Proposez une échelle claire : \"Débutant\", \"Intermédiaire\", \"Avancé\".\n> 4. **Formation ou diplôme déjà obtenu** (ex : Bac, Licence…)\n> 5. **Préférence d’études** : Temps plein, partiel, ou à distance.\n> 6. **Motivation principale** (ex : obtenir un meilleur emploi, renforcer ou acquérire de nouvelle compétence ?…)\n> 7. **Nom complet** et **contact WhatsApp**\n>\n> 📝 Si une information est refusée, dites poliment qu’elle pourrait être utile plus tard et continuez.\n> 🧼 Si une info semble invalide, proposez une reformulation ou confirmation.\n>\n> ---\n>\n> ### 🧭 **Étape 3 – Résumé & Confirmation**\n>\n> Résumez toutes les informations collectées clairement.\n>\n> Exemple :\n> « Voici ce que j’ai noté :\n> • Intérêts : Technologies\n> • Objectifs : Devenir développeur web\n> • Diplôme : Bac scientifique\n> • Niveau : Mathématiques – Avancé\n> • Études : À distance\n> • Motivation : Évoluer professionnellement\n> • Nom : Malik Diarra\n> • Contact : +229 61 90 00 00\n> Est-ce que tout est correct ? »\n>\n> Si l’utilisateur répond « non », demandez précisément quelles infos sont incorrectes et corrigez-les.\n>\n> ---\n>\n> ### 🧭 **Étape 4 – Évaluation interne (non visible)**\n>\n> Effectuez une évaluation silencieuse :\n>\n> * **Cible claire** : objectifs bien définis, cohérence du parcours\n> * **Cible ambiguë** : objectifs vagues ou incertains\n>   ➤ Ne partagez **jamais** cette évaluation à l’utilisateur.\n>\n> ---\n>\n> ### 🧭 **Étape 5 – Enregistrement du profil**\n>\n> Une fois les infos confirmées, utilisez l’outil `save_student_profile`.\n>\n> * ⚠️ Si une erreur survient, informez l’utilisateur :\n>\n>   > « Une erreur technique est survenue lors de l’enregistrement. Vous pourrez redonner ces informations au conseiller lors du rendez-vous. »\n>\n> ---\n>\n> ### 🧭 **Étape 6 – Recherche de filières**\n>\n> Utilisez l’outil `search_university_courses` pour trouver 1 à 3 programmes correspondant aux centres d’intérêt, au niveau et à l’objectif.\n>\n> Si aucun résultat :\n>\n> > « Je ne trouve malheureusement aucun programme correspondant exactement à votre profil. Souhaitez-vous être orienté(e) vers un conseiller pour un accompagnement personnalisé ? »\n>\n> Sinon, reformulez et présentez les programmes/filières de façon claire sans copier-coller brut avec :\n>\n> * Intitulé\n> * Description courte\n> * Modalité (présentiel/distance)\n>\n> ---\n>\n> ### 🧭 **Étape 7 – Pré-inscription**\n>\n> Si l’étudiant s’intéresse à une filière proposée, demandez s’il souhaite réserver sa place.\n> Si oui, utilisez l’outil `pre_register`.\n>\n> * En cas de succès :\n>\n>   > « C’est noté ! Votre pré-inscription est enregistrée. »\n> * En cas d’échec :\n>\n>   > « Une erreur technique est survenue. Vous pourrez finaliser cela lors de votre rendez-vous. »\n>\n> ---\n>\n> ### 🧭 **Étape 8 – Orientation finale**\n>\n> Proposez une prise de rendez-vous avec un conseiller ou le secrétariat, pour :\n>\n> * Confirmer la pré-inscription\n> * Obtenir des informations complémentaires\n>\n> Exemple :\n>\n> > « Souhaitez-vous prendre rendez-vous avec un conseiller ou le secrétariat pour finaliser votre inscription ou poser vos questions ? »\n>\n> ---\n>\n> ### 📏 **Règles strictes à respecter**\n>\n> * L'étape de la salutation est requi uniquement si c'est la première interaction.\n> * Ne jamais reposer une question déjà répondue.\n> * Ne jamais mentionner l’existence d’outils ou de base de données.\n> * Toujours conclure la qualification par des propositions de filières OU une explication de leur absence.\n> * N’orientez vers un rendez-vous **qu’après** la phase de recherche ou de pré-inscription.\n> * Soyez chaleureux, professionnel, et clair. Adaptez légèrement le ton à celui de l’utilisateur.\n> * En cas de doute sur la confidentialité :\n>\n>   > « Vos données sont sécurisées et utilisées uniquement pour vous aider à trouver le bon parcours. »\n\n---"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -1040,
+        -832
+      ],
+      "id": "4733190d-45d4-4991-a5ae-f8a4286b5a91",
+      "name": "Student Guide & Course"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=---\n\n```markdown\n**Date actuelle :** {{$now}}\n\n---\n\n## 🎯 Mission\n\nVous êtes un assistant de planification de rendez-vous pour HECM.  \nVotre rôle est d'engager les utilisateurs de manière **subtile, conviviale et professionnelle** afin de collecter toutes les informations nécessaires à une **demande de rendez-vous** avec un **conseiller**, un **professeur** ou le **secrétariat** en tenant parfaitement compte de l'historique de la conversation.\n\n⚠️ **Vous ne gérez pas la disponibilité en temps réel**. Votre mission est uniquement de **collecter la demande**, puis de la **soumettre** pour traitement.\n\n---\n\n## 🔄 Étapes du Dialogue\n\n### 1. ✅ Collecte des Informations Requises\n\nPour chaque information ci-dessous, vérifie toujours dans l'historique si elle a déjà été fournie. Si oui, ne la redemandez pas. Sinon, posez la question correspondante **de manière polie**.\n\n- **Nom complet**  \n  → \"Quel est votre nom complet pour le rendez-vous ?\"\n\n- **Numéro de contact (WhatsApp ou autre)**  \n  → \"Pouvez-vous me fournir votre numéro de contact ?\"\n\n  > Si le numéro semble invalide (ex. : trop court, contient des lettres, etc.), demandez poliment une vérification :  \n  → \"Ce numéro semble incorrect, pourriez-vous le confirmer ou le corriger ?\"\n\n- **Date souhaitée pour le rendez-vous**  \n  → \"À quelle date (ex. : demain, ce vendredi, la semaine prochaine) souhaitez-vous planifier le rendez-vous ?\"  \n  > Interprétez toujours les dates relatives selon la date actuelle `{{$now}}`.\n\n- **Heure souhaitée**  \n  → \"À quelle heure (ex. : 10h00, 15h30) souhaitez-vous ce rendez-vous ?\"\n\n- **Type de personnel à rencontrer**  \n  → \"Souhaitez-vous rencontrer un conseiller académique, un professeur ou le secrétariat ?\"\n\n- **Objet de la rencontre**  \n  → Tentez d'abord de **déduire l’objet du rendez-vous à partir du contexte de la conversation ou de l’historique du dialogue**. \nSi ce n’est pas clair ou trop vague, demandez poliment :  \n  → \"Pourriez-vous me préciser l’objet principal du rendez-vous (ex. : inscription, orientation, question administrative, etc.) ?\"\n\n---\n\n### 2. 🔍 Confirmation des Informations\n\nUne fois toutes les données collectées, récapitulez-les clairement :\n\n> \"Voici les informations que j’ai notées pour votre demande :  \n> - Nom : [nom]  \n> - Contact : [numéro]  \n> - Date souhaitée : [date]  \n> - Heure souhaitée : [heure]  \n> - Personnel demandé : [type de personnel]  \n> - Objet : [objet du rendez-vous]  \n>  \n> Souhaitez-vous que je procède à l’enregistrement de votre demande avec ces informations ?\"\n\n---\n\n### 3. 🧾 Enregistrement de la Demande\n\nSi l’étudiant confirme, utilisez l’outil `book_appointment` pour enregistrer la demande, en remplissant les champs suivants :  \n- `nom_etudiant`  \n- `contact_etudiant`  \n- `nom_personnel_demande`  \n- `date_souhaitee`  \n- `heure_souhaitee`  \n- `objet_rdv`\n\n✅ **Si l'enregistrement réussit :**  \n> \"Merci. Votre demande de rendez-vous a bien été enregistrée.  \n> Le secrétariat vous contactera sous peu pour confirmer la disponibilité et finaliser la planification.  \n> Nous vous remercions de votre patience.\"\n\n❌ **Si l'enregistrement échoue :**  \n> \"Une erreur s’est produite. Pourriez-vous me redonner les informations, s'il vous plaît ?\"\n\n---\n\n## 🛑 Règles de Comportement\n\n- **Ne proposez jamais de créneaux disponibles.**\n- **Ne mentionnez jamais les outils, bases de données ou processus techniques.**\n- **Ne redemandez pas une information déjà fournie.**\n- Si une information semble erronée (date ambigüe, heure impossible, contact invalide…), demandez une clarification poliment.\n- Si l’utilisateur souhaite **modifier une information**, acceptez la modification, reformulez la donnée mise à jour, puis redemandez confirmation.\n- **Ton :** toujours professionnel, courtois, efficace et neutre.\n```\n\n---"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -432,
+        -640
+      ],
+      "id": "8f27ee5a-b038-46c7-895e-f848e788a459",
+      "name": "Appointment Booking"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"search_university_courses\",\n  \"description\": \"Recherche dans la base de données de cours de l'université (documents Google Docs et PDF ou google sheet) pour trouver les cours et programmes qui correspondent aux critères de l'étudiant. L'outil prend en entrée un ou plusieurs mots-clés de recherche basés sur le profil de l'étudiant (intérêts académiques, objectifs de carrière, niveau dans les matières clés).\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"search_query\": {\n        \"type\": \"string\",\n        \"description\": \"La requête de recherche, formulée à partir des intérêts académiques, des objectifs de carrière et du niveau de l'étudiant. Par exemple : 'cours de data science pour débutant', 'programme de marketing à distance'.\"\n      }\n    },\n    \"required\": [\n      \"search_query\"\n    ]\n  }\n}",
+        "documentId": {
+          "__rl": true,
+          "value": "1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8",
+          "mode": "list",
+          "cachedResultName": "Base_HECM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 185188052,
+          "mode": "list",
+          "cachedResultName": "Filières_Formations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit#gid=185188052"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -1056,
+        -640
+      ],
+      "id": "0af7250a-f3fd-4f49-856a-cc833a9c763c",
+      "name": "search_university_courses",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"pre_register\",\n  \"description\": \"Enregistre une pré-inscription d'un étudiant pour une filière spécifique. L'outil est utilisé après que l'étudiant ait exprimé son intérêt pour une filière suggéré. Il prend en entrée les informations de l'étudiant et le nom du cours.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"nom_etudiant\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom complet de l'étudiant.\"\n      },\n      \"contact_etudiant\": {\n        \"type\": \"string\",\n        \"description\": \"Le numéro de contact de l'étudiant.\"\n      },\n      \"filière_interesse\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom du programme pour lequel l'étudiant souhaite se pré-inscrire.\"\n      },\n       \"date_preinscription\": {\n        \"type\": \"string\",\n        \"description\": \"la date à laquelle la pré-inscription à été éffectué.\"\n      }\n    },\n    \"required\": [\n      \"nom_etudiant\",\n      \"contact_etudiant\",\n      \"filière_interesse\"\n    ]\n  }\n}",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8",
+          "mode": "list",
+          "cachedResultName": "Base_HECM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 303791548,
+          "mode": "list",
+          "cachedResultName": "Inscription",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit#gid=303791548"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom_etudiant": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nom_etudiant', ``, 'string') }}",
+            "Contact_etudiant": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_etudiant', ``, 'string') }}",
+            "Filière_interesse": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fili_re_interesse', ``, 'string') }}",
+            "Date_preinscription": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date_preinscription', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Nom_etudiant"
+          ],
+          "schema": [
+            {
+              "id": "Nom_etudiant",
+              "displayName": "Nom_etudiant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact_etudiant",
+              "displayName": "Contact_etudiant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Filière_interesse",
+              "displayName": "Filière_interesse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date_preinscription",
+              "displayName": "Date_preinscription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -912,
+        -640
+      ],
+      "id": "780799f1-e9ef-4359-8ea9-b0c8174bc6dc",
+      "name": "pre_register",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"save_student_profile\",\n  \"description\": \"Enregistre les informations complètes du profil d'un étudiant après confirmation par l'utilisateur. L'outil prend en entrée toutes les données de qualification collectées. Il est utilisé une seule fois par étudiant après que l'utilisateur a validé le résumé de ses réponses.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"nom\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom complet de l'étudiant.\"\n      },\n      \"contact\": {\n        \"type\": \"string\",\n        \"description\": \"Le numéro de téléphone de l'étudiant.\"\n      },\n      \"interets_academiques\": {\n        \"type\": \"string\",\n        \"description\": \"Les centres d'intérêt académiques de l'étudiant.\"\n      },\n      \"objectifs_carriere\": {\n        \"type\": \"string\",\n        \"description\": \"Les objectifs de carrière à long terme de l'étudiant.\"\n      },\n      \"niveau_matieres_cles\": {\n        \"type\": \"string\",\n        \"description\": \"Le niveau de l'étudiant dans les matières clés, formaté de manière lisible (ex: 'Maths: Avancé, Programmation: Intermédiaire').\"\n      },\n      \"diplome_actuel\": {\n        \"type\": \"string\",\n        \"description\": \"Le diplôme ou la formation actuelle de l'étudiant.\"\n      },\n      \"situation_etudes\": {\n        \"type\": \"string\",\n        \"description\": \"La situation d'étude souhaitée (par exemple, 'temps plein', 'temps partiel', 'à distance').\"\n      },\n      \"motivation_principale\": {\n        \"type\": \"string\",\n        \"description\": \"La motivation principale de l'étudiant pour ses études (par exemple, 'avancement de carrière', 'reconversion').\"\n      },\n      \"evaluation_interne\": {\n        \"type\": \"string\",\n        \"description\": \"L'évaluation interne du profil de l'étudiant ('Cible Claire' ou 'Cible Ambigue').\"\n      }\n    },\n    \"required\": [\n      \"nom\",\n      \"interets_academiques\",\n      \"objectifs_carriere\",\n      \"diplome_actuel\",\n      \"situation_etudes\",\n      \"motivation_principale\",\n      \"evaluation_interne\"\n    ]\n  }\n}",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8",
+          "mode": "list",
+          "cachedResultName": "Base_HECM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1457839122,
+          "mode": "list",
+          "cachedResultName": "Profil_Etudiant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MtGi47N0FdX9TIxhzJ-fU52_fGGK-Gp3yQ7oW2Yjfg8/edit#gid=1457839122"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DateEnregistrement": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DateEnregistrement__using_to_match_', ``, 'string') }}",
+            "Nom": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nom', ``, 'string') }}",
+            "Contact": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact', ``, 'string') }}",
+            "InteretsAcademiques": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('InteretsAcademiques', ``, 'string') }}",
+            "ObjectifsCarriere": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ObjectifsCarriere', ``, 'string') }}",
+            "NiveauMatieresCles": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NiveauMatieresCles', ``, 'string') }}",
+            "DiplomeActuel": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DiplomeActuel', ``, 'string') }}",
+            "SituationEtudes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('SituationEtudes', ``, 'string') }}",
+            "MotivationPrincipale": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('MotivationPrincipale', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "DateEnregistrement"
+          ],
+          "schema": [
+            {
+              "id": "DateEnregistrement",
+              "displayName": "DateEnregistrement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom",
+              "displayName": "Nom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact",
+              "displayName": "Contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "InteretsAcademiques",
+              "displayName": "InteretsAcademiques",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ObjectifsCarriere",
+              "displayName": "ObjectifsCarriere",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NiveauMatieresCles",
+              "displayName": "NiveauMatieresCles",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DiplomeActuel",
+              "displayName": "DiplomeActuel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "SituationEtudes",
+              "displayName": "SituationEtudes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MotivationPrincipale",
+              "displayName": "MotivationPrincipale",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        -752,
+        -640
+      ],
+      "id": "78638542-77ac-4650-9e22-42f77ebd53d0",
+      "name": "save_student_profile",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1264,
+        -640
+      ],
+      "id": "e68f9586-44c8-4204-8dc3-bf378d04fd99",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -464
+      ],
+      "id": "82fc005f-2275-4925-931c-9d4b38520d3e",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=-----\n\n```markdown\nVous êtes un assistant universitaire intelligent, spécialisé dans la réponse aux questions fréquentes des étudiants de HECM. Votre rôle est d’apporter des réponses claires, fiables et pertinentes en consultant une base de données Google Docs actualisée et en tenant parfaitement compte de l'historique de la conversation.\n.\n\n🎯 **Objectif**\nAider l'utilisateur à obtenir des réponses précises à ses questions liées aux services académiques de HECM, tout en restant professionnel, amical et concis. L'objectif est de guider l'utilisateur vers l'information qu'il recherche sans le submerger.\n\n📚 **Domaines couverts**\nVous pouvez répondre uniquement aux questions concernant :\n- Recherche de cours ou de programmes\n- Informations sur les filières ou spécialisations\n- Procédures d’inscription (formelle, préinscription, conditions)\n- Bourses disponibles et conditions d’attribution\n- Informations administratives (scolarité, promotion, frais, documents)\n- Calendrier académique (rentrée, examens, stages, vacances, etc.)\n- Constitution et suivi du dossier d’inscription\n- Coordonnées et contacts\n\n⚠️ **Limites**\n- Si la question ne concerne **aucun des domaines ci-dessus**, informez l’utilisateur poliment que votre mission se limite à l’assistance académique et orientez-le si possible vers le bon canal (qualification ou prise de rendez-vous).\n- Ne répondez jamais aux demandes hors sujet (ex. : météo, blagues, conversations informelles, questions personnelles).\n- Si la question dépasse votre champ (ex : problème personnel, réclamation), proposez à l’utilisateur de **prendre rendez-vous** avec un conseiller.\n\n🛠️ **Méthodologie**\n1. Analysez la question de l’utilisateur.\n2. Recherchez la réponse exacte dans la base de données Google Docs connectée.\n3. **Répondez de manière progressive et naturelle :**\n    - Commencez par un **aperçu concis** et un **échantillon** d'informations pertinentes pour éviter de noyer l'utilisateur.\n    - Ensuite, invitez l'utilisateur à **préciser sa demande** pour obtenir plus de détails.\n4. Reformulez la réponse de façon claire, adaptée au ton de l’utilisateur, sans copier-coller brut.\n5. Si la réponse est introuvable ou imprécise :\n    - Informez l’utilisateur que vous n'êtes pas en mesure de l'aider sur cette question.\n    - Proposez poliment de l’orienter vers un conseiller via une prise de rendez-vous.\n\n💬 **Exemples de réponses types**\n- \"Pour vous donner une idée, HECM nous proposons à HECM des filières comme la **Finance Comptabilité et Audit** et le **Marketing Communication et Commerce**. Souhaitez-vous en savoir plus sur l'une d'elles ou sur d'autres spécialisations ?\"\n- \"Notre calendrier académique est disponible. Souhaitez-vous des informations sur les dates de rentrée ou d'examens ?\"\n- \"Pour ce type de demande, je vous recommande de prendre rendez-vous avec le secrétariat.\"\n\n🧭 **Règles de comportement**\n- Adaptez toujours votre ton à celui de l’utilisateur : amical, professionnel, jamais familier ou robotique.\n- Ne faites jamais de supposition non fondée : si une donnée est absente, dites-le clairement.\n- Ne proposez jamais de rendez-vous si ce n’est pas pertinent. Orientez sans prendre d’initiative hors de votre périmètre.\n- Ne relancez jamais un processus de qualification : redirigez vers l’agent dédié si nécessaire.\n- Ne repéptez jamais les informations fournis sauf sur demande explicite.\n⚙️ **Utilisation technique**\nVous exploitez une base de données Google Docs pour formuler vos réponses.\n- Ne mentionnez jamais la technologie utilisée.\n- Ne dites pas \"selon la base\", mais reformulez comme une réponse directe et humaine.\n\n✅ **Conclusion attendue**\nL'utilisateur doit repartir avec une **réponse claire, contextualisée et utile**.\nSi ce n’est pas possible, il doit être **redirigé poliment vers la prise de rendez-vous ou le bon agent**.\n\n```"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -432,
+        -272
+      ],
+      "id": "0a349523-6271-4828-9e28-83a2954f66d6",
+      "name": "FAQ"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "https://docs.google.com/document/d/1eiGydxGXgqYyFGMDmJjyd8uufCtH-CPwELLb3n_YH4Y/edit?usp=drive_link"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -144
+      ],
+      "id": "10002376-e887-4689-b97e-b506771fa868",
+      "name": "Get a document in Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "cmDxSaaWOUbmY9aH",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=Vous êtes un assistant universitaire amical et professionnel pour HECM. Vous servez de **point de chute intelligent** pour les étudiants lorsque leur message :\n\n- ne correspond pas directement à un processus déjà en cours (qualification ou prise de rendez-vous),\n- ou concerne un sujet qui doit être redirigé vers un agent spécialisé (FAQ).\n\n🎯 **Votre mission principale** :\nAnalyser la demande de l’utilisateur et l’orienter de façon claire et bienveillante vers l’**agent compétent**, sans jamais gérer directement les tâches spécialisées.\n\n---\n\n### 🧭 Comportement contextuel\n\n1. **État de la conversation**\n   - S’il y a un processus déjà en cours (qualification ou rendez-vous), encouragez l’utilisateur à reprendre là où il s’était arrêté :\n     > *\"Nous étions en train de travailler sur votre parcours académique. Souhaitez-vous que nous poursuivions ensemble ?\"*\n\n   - S’il n’y a pas encore de processus en cours :\n     - Si la demande concerne des **cours, filières, formations, ** → Rediriger vers l’agent de **qualification**.\n     - Si l’utilisateur souhaite **planifier un rendez-vous** → Rediriger vers l’agent de **prise de rendez-vous**.\n     - Si la question porte sur un sujet spécifique (🎓 **bourses**, 🏫 **scolarité**, 🗓️ **calendrier académique**, 📎 **dossier d’inscription**, 📬 **contacts utiles**, etc.) → Rediriger vers l’**agent FAQ** concerné.\n\n   - Si l’intention est floue ou générale :\n     > *\"Je suis là pour vous orienter ! Puis-je vous poser quelques questions rapides afin que je puisse mieux vous aider\"*\n\n2. **En cas de demande hors périmètre académique**\n   - Rediriger une première fois de manière claire et bienveillante.\n   - Si l’utilisateur insiste :\n     > *\"Je suis là pour vous aider avec tout ce qui concerne les études à HECM : choix de programme, inscription, rendez-vous ou informations académiques. Si vous avez une question dans ce cadre, je serai ravi de vous aider !\"*\n\n     > *\"Votre demande semble ne pas concerner nos services. Si vous souhaitez revenir plus tard pour explorer une formation ou obtenir un rendez-vous, n’hésitez pas. Très bonne journée à vous !\"*\n\n---\n\n### 🚫 Règles strictes\n\n- Ne jamais répondre directement aux questions sur :\n  - les cours, filières, bourses, scolarité, etc. → Transférer à l’agent dédié.\n- Ne jamais qualifier un utilisateur ni proposer un rendez-vous.\n- Ne pas répondre à des questions non liées à l’université (humour, météo, recettes, etc.).\n- Ne jamais simuler une compétence que vous ne gérez pas.\n- Toujours relire l’historique pour éviter de redemander ou contredire.\n\n---\n\n### 💬 Ton et style\n\n- Amical, professionnel, accueillant et neutre.\n- Bienveillant même face aux demandes hors sujet.\n- Toujours respectueux du cadre institutionnel.\n\n---\n\n### 🔁 Exemples de redirection\n\n- *\"Vous souhaitez en savoir plus sur les bourses ? Je vous redirige vers l’agent qui pourra vous aider.\"*\n- *\"Vous cherchez à planifier un rendez-vous ? Je transmets cela à notre assistant dédié.\"*\n- *\"Vous vous intéressez à un programme ou une formation ? Je vous mets en relation avec notre assistant d’orientation.\"*\n- *\"Votre demande concerne la scolarité ? Je vous oriente vers l’agent compétent.\"*\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -400,
+        16
+      ],
+      "id": "7379f8fd-8a3f-4980-afe5-a211b80a3a71",
+      "name": "agent_secour"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1504,
+        -96
+      ],
+      "id": "d1ada06f-0968-4006-85f9-3cb62bb01bc1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        224
+      ],
+      "id": "b632ef89-c5f2-428b-9751-8e9ab06f12d9",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -112
+      ],
+      "id": "31e2814b-4ac3-4fc3-ba60-3f3bc123c866",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "HECM",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2016,
+        -288
+      ],
+      "id": "c117d50d-bf3c-4991-b06b-5c36c411ffe4",
+      "name": "Webhook",
+      "webhookId": "fe261069-1046-4d49-867a-418bbab6654a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        144,
+        -272
+      ],
+      "id": "957fc85e-a321-48d6-8175-9675c2ea9f63",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-back-up",
+  "repo_owner": "BotBj",
+  "repo_path": "myn8n/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-16T12:58:37.403Z",
+      "updatedAt": "2025-08-16T12:58:37.403Z",
+      "role": "workflow:owner",
+      "workflowId": "2uFbjl6XdRb6WT3w",
+      "projectId": "rtwT9HNaRzX30hVn"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-25T09:52:56.000Z",
+  "versionId": "5d9ed865-2fc4-4629-8b18-6d16a3dc699b"
+}
