@@ -1,0 +1,526 @@
+{
+  "active": true,
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Typing": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen": {
+      "main": [
+        [
+          {
+            "node": "Start Typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Typing": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Stop Typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catalogue1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catalogue2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commande": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-28T07:30:05.280Z",
+  "id": "0VJzojlSjluDa6sv",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "OSM WAHA",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('WAHA Trigger').item.json.payload.media._data.body }}",
+        "options": {
+          "systemMessage": "=```\nTu es le conseiller commercial attitré et passionné de la boutique **OSM Business**, un expert en produits et services tech.\n\n### 🎯 Mission Principale\nGuider le client de la découverte à la finalisation de la commande avec expertise et enthousiasme. Tes 3 piliers sont : **Vente Persuasive**, **Gestion de Commandes A-Z**, et **Expertise Technique** (réponses précises).\n\n---\n\n### ⚠️ Protocole de Sécurité et Priorité des Données (RÈGLES D'OR)\n1. **ZÉRO INVENTION.** Appuie-toi *exclusivement* sur les données récupérées via les outils.\n2. **Consultation Obligatoire.** **Avant chaque réponse**, interroge systématiquement les outils disponibles.\n3. Si une donnée n’est **pas disponible** : indique-le poliment sans t'excuser (\"Cette information n’est pas accessible pour le moment. Je peux cependant vous orienter vers...\").\n4. **Évite toute mention de ton statut d'IA.** Tu es un conseiller OSM.\n\n---\n\n### 🗣️ Ton et Communication\n* **Expert et Enthousiaste** : Ton langage est celui d'un passionné de tech, utilisant un vocabulaire technique précis.\n* **Bref et Engagé** : Réponds de manière **concise (max 3-4 phrases)**. Utilise le **formatage (gras, listes)** pour mettre les points importants en évidence.\n* **Personnalisé** : Commence toujours par une salutation chaleureuse (ex: \"Bonjour [Nom] ! Ravi de vous voir. Qu'est-ce qui vous amène chez nous aujourd'hui ?\").\n* **Émojis Stratégiques** : Utilise-les pour accentuer (ex: `🚀` pour la performance, `🤝` pour la confirmation).\n\n---\n\n### 🧰 Outils et Utilisation\n1. **Catalogue1 / Catalogue2 / InfoGene :**\n   - Présente un maximum de **3 produits à la fois** (Nom, prix, avantages, usage, état).\n   - Incite à la suite (\"Un modèle vous intéresse-t-il plus particulièrement ?\").\n2. **Commande :**\n   - Gère Enregistrement/Modification/Annulation.\n   - **Confirmation Claire Obligatoire** avant toute action.\n   - Confirme le résultat de façon structurée après chaque opération.\n3. **InfoGene :**\n   - Utilise pour toutes les questions de services (réparation, livraison, garantie, etc.).\n\n---\n\n### 🧠 Guidance Client et Anticipation\n* **Gestion Vague/Partielle** : Si l’intention est vague (ex : \"je cherche un ordi\"), propose immédiatement un petit échantillon de **3 produits pertinents** de cette catégorie.\n* **Structure de la Réponse Vague** : 1. Suggestion Pertinente (liste courte) ; 2. **Question de Précision** pour affiner le besoin (ex: \"Quel type recherchez-vous ? Performance ou autonomie ?\").\n* **Incitations à l'action** : Suggère des actions (🛒 Ajouter, 📦 Commander) **au bon moment, sans insister**. Utilise une formule naturelle et enthousiaste (ex: \"Si le cœur vous en dit, on peut finaliser...\").\n* **Maintien du Contexte** : Ne repropose jamais les mêmes produits si ce n'est pas demandé et garde toujours le fil des besoins exprimés.\n\nLocalisation : Arafat, en face du portail principal de l'Université de Parakou.\n```"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -32
+      ],
+      "id": "421225bb-e8d4-46dc-9dba-d24f14949200",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        240
+      ],
+      "id": "d4b6dad2-f2ed-41a0-b9b0-b8f82594b665",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        208,
+        208
+      ],
+      "id": "2dc2c7cc-c61c-4f28-9b82-53561a455f59",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202411,
+      "position": [
+        -464,
+        -368
+      ],
+      "id": "11e66c7b-07b0-49e6-8c80-e3482a0f8f71",
+      "name": "WAHA Trigger",
+      "webhookId": "253967de-ddba-4f1e-a7b9-e60cba45c5c4"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('WAHA Trigger').item.json.session }}",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.media.from }}",
+        "reply_to": "=",
+        "text": "={{ $('AI Agent').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1168,
+        -32
+      ],
+      "id": "0e4129a2-09ea-43bb-9f1a-9db866467f68",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "9zRsx8TKsrweOboS",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('WAHA Trigger').item.json.session }}",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        928,
+        -32
+      ],
+      "id": "d91305a1-6f8f-436e-b82c-f96d64ef5c0e",
+      "name": "Stop Typing",
+      "credentials": {
+        "wahaApi": {
+          "id": "9zRsx8TKsrweOboS",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "participant": "=",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        -48,
+        -32
+      ],
+      "id": "79b681a4-c1fb-4f09-a5f3-7ddfe5f98d51",
+      "name": "Send Seen",
+      "credentials": {
+        "wahaApi": {
+          "id": "9zRsx8TKsrweOboS",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $('WAHA Trigger').item.json.session }}",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.media._data.from }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        160,
+        -32
+      ],
+      "id": "b91a2e82-719b-4cf6-af69-362518078388",
+      "name": "Start Typing",
+      "credentials": {
+        "wahaApi": {
+          "id": "9zRsx8TKsrweOboS",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 7
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -32
+      ],
+      "id": "cae9b0ba-9b7b-44b7-9ea3-dfe1bcaa7dea",
+      "name": "Wait2",
+      "webhookId": "6263cdaa-68b8-44a0-ab39-4dff883ea4af"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"Commande\",\n  \"description\": \"Outil de gestion du cycle de vie des commandes clients chez OSM Business. Il permet d’enregistrer, modifier ou annuler une commande. Champs requis : productId, actionType (enregistrement, modification, annulation), customerName, modificationDetails, reason. L’agent doit toujours demander une confirmation avant d’exécuter l’action, puis confirmer à l’utilisateur le succès de l’opération une fois réalisée.\"\n}\n",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU",
+          "mode": "list",
+          "cachedResultName": "OSM BUSINESS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 982683136,
+          "mode": "list",
+          "cachedResultName": "Commande",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit#gid=982683136"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ID__using_to_match_', ``, 'string') }}",
+            "Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date', ``, 'string') }}",
+            "Adresse de livraison": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Adresse_de_livraison', ``, 'string') }}",
+            "Nom ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nom_', ``, 'string') }}",
+            "Contact": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact', ``, 'string') }}",
+            "Detail_commande": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Detail_commande', ``, 'string') }}",
+            "Prix_total": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prix_total', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom ",
+              "displayName": "Nom ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact",
+              "displayName": "Contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Adresse de livraison",
+              "displayName": "Adresse de livraison",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail_commande",
+              "displayName": "Detail_commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prix_total",
+              "displayName": "Prix_total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        752,
+        240
+      ],
+      "id": "32324e31-1d3a-4e42-81ac-40b58d1c66d5",
+      "name": "Commande",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Botbj"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"Catalogue1\",\n  \"description\": \"Base de données des produits électroniques disponibles chez OSM Business, à l’exception des ordinateurs. Elle contient les fiches complètes des smartphones, tablettes, accessoires, et autres articles. Chaque fiche inclut : le nom du produit, la catégorie, le prix unitaire, et une image si disponible. Utilise cet outil pour présenter, recommander ou comparer ces produits en fonction des besoins du client.\"\n}\n",
+        "documentId": {
+          "__rl": true,
+          "value": "13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU",
+          "mode": "list",
+          "cachedResultName": "OSM BUSINESS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1149727683,
+          "mode": "list",
+          "cachedResultName": "Catalogue1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit#gid=1149727683"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        464,
+        240
+      ],
+      "id": "1afe770f-53ad-4ff8-919e-774606135307",
+      "name": "Catalogue1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Botbj"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "={\n  \"name\": \"Catalogue2\",\n  \"description\": \"Base de données dédiée exclusivement aux ordinateurs vendus par OSM Business. Chaque entrée contient : nom du modèle,la marque, spécifications techniques (RAM, processeur, stockage, etc.), prix, l'état et image (si disponible). Utilise cet outil pour répondre aux questions sur les ordinateurs ou recommander un modèle adapté aux besoins du client.\"\n}\n",
+        "documentId": {
+          "__rl": true,
+          "value": "13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU",
+          "mode": "list",
+          "cachedResultName": "OSM BUSINESS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 175018694,
+          "mode": "list",
+          "cachedResultName": "Catalogue2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13sn4d3gUYemSV5az3itbpJghfWZmmcdtiTBTrG_G1hU/edit#gid=175018694"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        608,
+        240
+      ],
+      "id": "9220ac0c-6a72-4c03-a46a-6cc5d1ecc6ae",
+      "name": "Catalogue2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Botbj"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-back-up",
+  "repo_owner": "BotBj",
+  "repo_path": "myn8n/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-28T07:30:05.282Z",
+      "updatedAt": "2025-09-28T07:30:05.282Z",
+      "role": "workflow:owner",
+      "workflowId": "0VJzojlSjluDa6sv",
+      "projectId": "rtwT9HNaRzX30hVn"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-28T11:36:08.000Z",
+  "versionId": "0997307a-d8a3-45da-971f-b20e48336e63"
+}
