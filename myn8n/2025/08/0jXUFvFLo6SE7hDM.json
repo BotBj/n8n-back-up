@@ -1,0 +1,514 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Support Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet in Google Sheets1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Support Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-18T09:13:29.699Z",
+  "id": "0jXUFvFLo6SE7hDM",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Bahia_cabanabot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Bahia_cabanabot",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        -384
+      ],
+      "id": "b3ee2593-7aad-48a3-962e-97b072ce907e",
+      "name": "Webhook",
+      "webhookId": "0a2f0972-ed8f-49c8-ab4a-68d30874d116"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.session_id }}",
+        "contextWindowLength": 15
+      },
+      "id": "d80c89c7-5a83-486d-8fa8-e5e5583d4073",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -352,
+        16
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "=Tu es l'assistant de service intelligent et courtois, représentant du restaurant Bahia Cabana. Ta mission est d'être le premier point de contact pour notre clientèle, en les guidant de manière efficace, naturelle et conviviale à travers notre menu, nos services de commande et nos réservations. Tu dois toujours te comporter comme un interlocuteur humain, professionnel et serviable, et tu ne dois jamais imposer de choix ou de direction.\n\nTes fonctions principales sont :\n\nPrésenter le menu : Renseigner la clientèle sur le menu du restaurant, nos plats du jour et nos offres spéciales.\n\nPour chaque requête de plat ou de boisson, tu dois extraire et présenter un maximum de 5 options à la fois pour ne pas submerger le client.\n\nConsigne d'efficacité ABSOLUE :\n\nNe JAMAIS présenter un plat ou une boisson qui a déjà été montré(e) au cours de la conversation actuelle.\n\nToujours proposer de nouvelles options qui appartiennent à la même catégorie que les plats précédemment présentés (ex: 'Spécialités', 'Plats Africains', 'Mélanges'), sauf si le client spécifie une catégorie différente.\n\nPour chaque plat ou boisson, tu dois obligatoirement inclure :\n\nL'image du plat (URL)\n\nSon nom\nUne description appétissante (1 à 2 phrases max.)\nLe prix.\n\nTu dois être concis et clair, en te concentrant sur les informations essentielles pour ne pas surcharger l'utilisateur. Après chaque présentation, demande toujours au client s'il souhaite commander le plat, en savoir plus sur les ingrédients ou voir d'autres options.\n\nPrendre les commandes :\n\nPrise de commande : Enregistrer les commandes pour la livraison ou le service en salle de manière fluide. Tu dois guider le client étape par étape.\n\nModification et annulation : Gérer la modification ou l'annulation des commandes.\n\nPrendre les réservations :\n\nPrise de réservation : Enregistrer les réservations de table en recueillant les informations nécessaires (nom, date, heure, nombre de personnes).\n\nModification ou annulation : Gérer la modification ou l'annulation d'une réservation.\n\nVérifier la disponibilité : Renseigner sur la disponibilité des plats et boissons en te basant sur l'état des stocks.\n\nRecommander des plats : Proposer des suggestions de plats ou de boissons basées sur les préférences du client, les plats les plus populaires ou les accords mets-vins, sans aucune pression.\n\nRépondre aux questions générales : Gérer les FAQ liées au restaurant (horaires, localisation, services de livraison, options végétariennes, etc.).\n\nDéclencheurs d'action automatiques :\n\nConfirmation de commande : Dès qu'une commande est confirmée par le client, tu dois IMMEDIATEMENT appeler l'outil enregistrer_commande pour l'enregistrer. Une fois enregistrée, fournis au client un message de confirmation et son ID de commande tout en lui rassurant que le livreur le contactera au numero fournis dès que la commande est prète.\n\nConfirmation de réservation : Dès qu'une réservation est confirmée par le client, tu dois IMMEDIATEMENT appeler l'outil enregistrer_reservation pour l'enregistrer. Une fois enregistrée, fournis au client un message de confirmation et son ID de réservation.\n\nAccès et Autonomie :\nTu as un accès direct et en temps réel à nos bases de données via Google Sheets :\n\nMenu Kingfood (pour les plats, les ingrédients, les prix et les URLs d'images).\n\nHistorique des commandes (pour la prise, la modification, l'annulation et le suivi des commandes).\n\nRegistre des réservations (pour les prises, modifications et annulations de tables).\nTu es capable d'utiliser ces outils de manière totalement autonome pour exécuter tes fonctions et répondre avec précision à toutes les demandes.\n\nContexte Temporel Actuel :\nTu as toujours accès à la date et à l'heure réelles (Heure de Cotonou, Bénin) pour la gestion des commandes et des réservations. \n\nTu es capable d'utiliser ces outils de manière totalement autonome pour exécuter tes fonctions et répondre avec précision à toutes les demandes.\n\nTon et Style de communication :\n\nLangue : Exclusivité française.\n\nTon : Professionnel, courtois, chaleureux et orienté solution.\n\nEmpathie : Montre de la compréhension et de la patience face à toutes les requêtes.\n\nClarté : Utilise un langage simple, direct et précis. Évite le jargon.\n\nNon-imposition : Ne suggère jamais une commande ou une réservation directe et ne pousse jamais à la consommation. Propose des options et laisse le client décider.\n\nStructure : Maintiens un échange clair et logique. Pose des questions ouvertes pour mieux cerner les besoins.\n\nInteraction initiale :\nCommence chaque interaction par une salutation amicale et concise, suivie d'une question ouverte pour inviter le client à s'exprimer. Utilise une formulation du type : \"Bonjour ! Ravi de vous accueillir chez Bahia Cabana. Comment puis-je vous aider aujourd'hui ?\"",
+          "returnIntermediateSteps": true
+        }
+      },
+      "id": "598aadfa-5463-408d-95e4-15f2b27e7f1a",
+      "name": "Support Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -96,
+        -384
+      ],
+      "retryOnFail": true,
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        -384
+      ],
+      "id": "b2c73433-cbd1-4086-83d6-afa127b58710",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "{\n  \"name\": \"consulter_menu\",\n  \"description\": \"Cet outil permet de rechercher des informations sur les plats et les boissons disponibles au restaurant Kingfood. Il interroge le Google Sheet 'Menu Kingfood' pour récupérer des détails tels que le nom, les ingrédients, le prix et l'URL de l'image. Utilise cet outil pour renseigner les clients sur les options du menu. Tu dois présenter les informations de manière appétissante et précise, sans jamais inventer de données. Si un plat n'est pas disponible dans le menu du restaurant, notifie le poliment au client en l'invitant à explorer les plat/boisson disponible de manière subtile.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"nom_plat\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom exact ou partiel du plat ou de la boisson à rechercher.\"\n      },\n      \"categorie\": {\n        \"type\": \"string\",\n        \"description\": \"La catégorie du plat pour affiner la recherche (ex: 'Spécialités', 'Mélanges', 'Plats Africains', 'boissons').\"\n      }\n    },\n    \"required\": [\"nom_plat\"]\n  }\n}",
+        "documentId": {
+          "__rl": true,
+          "value": "106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY",
+          "mode": "list",
+          "cachedResultName": "Base_Bahia_Cabana",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 197417981,
+          "mode": "list",
+          "cachedResultName": "Menu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit#gid=197417981"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "id": "8d1f7b2e-9dc6-4a1e-af05-95ae8fab88ae",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -96,
+        16
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "{\n  \"name\": \"enregistrer_commande\",\n  \"description\": \"Cet outil est utilisé pour enregistrer les commandes de la clientèle (pour livraison ou service en salle) dans le Google Sheet 'Historique des commandes'. Il crée un enregistrement complet de la commande. L'outil collecte la date, un ID de commande unique, le nom du client, les détails des plats et leur quantité, et le statut de la commande. Il est impératif d'appeler cet outil immédiatement après qu'une commande a été confirmée par le client. N'invente jamais d'informations et assure-toi que tous les paramètres sont correctement renseignés.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"date_commande\": {\n        \"type\": \"string\",\n        \"description\": \"La date à laquelle la commande est enregistrée. La date calendaire actuelle est ce lui du Bénin (Heure de Cotonou, Bénin).\n      },\n      \"id_commande\": {\n        \"type\": \"string\",\n        \"description\": \"Un identifiant unique généré pour cette commande ().\"\n      },\n      \"nom_client\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom complet du client qui passe la commande.\"\n      },\n      \"details_commande\": {\n        \"type\": \"string\",\n        \"description\": \"Une chaîne de caractères formatée contenant la liste des plats et boissons commandés avec leurs quantités (ex: 'Burger Kingfood: 2, Frites: 1, Coca-Cola: 2').\"\n      },\n      \"statut_commande\": {\n        \"type\": \"string\",\n        \"description\": \"Le statut initial de la commande. La valeur doit toujours être 'En cours'.\"\n      }\n    },\n    \"required\": [\"date_commande\", \"id_commande\", \"nom_client\", \"details_commande\", \"statut_commande\"]\n  }\n}",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY",
+          "mode": "list",
+          "cachedResultName": "Base_Bahia_Cabana",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1711278750,
+          "mode": "list",
+          "cachedResultName": "Historique des commandes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit#gid=1711278750"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $fromAI('Date', ``, 'string') }}",
+            "ID Commande": "={{ $fromAI('ID_Commande__using_to_match_', ``, 'string') }}",
+            "Tel": "={{ $fromAI('Tel', ``, 'string') }}",
+            "Type de commande": "={{ $fromAI('Type_de_commande', ``, 'string') }}",
+            "Nom ": "={{ $fromAI('Nom_', ``, 'string') }}",
+            "Details commande": "={{ $fromAI('Details_commande', ``, 'string') }}",
+            "Adition (FCFA)": "={{ $fromAI('Adition__FCFA_', ``, 'string') }}",
+            "Adress de livraison": "={{ $fromAI('Adress_de_livraison', ``, 'string') }}",
+            "Statut": "={{ $fromAI('Statut', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "ID Commande"
+          ],
+          "schema": [
+            {
+              "id": "ID Commande",
+              "displayName": "ID Commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type de commande",
+              "displayName": "Type de commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom ",
+              "displayName": "Nom ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tel",
+              "displayName": "Tel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Details commande",
+              "displayName": "Details commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Adition (FCFA)",
+              "displayName": "Adition (FCFA)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Adress de livraison",
+              "displayName": "Adress de livraison",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Statut",
+              "displayName": "Statut",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "id": "18e878de-d23e-4be3-b08b-0c5b11f49fb9",
+      "name": "Append or update row in sheet in Google Sheets",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        192,
+        48
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "{\n  \"name\": \"enregistrer_reservation\",\n  \"description\": \"Cet outil est utilisé pour enregistrer les réservations de table des clients dans le Google Sheet 'Registre des réservations'. Il collecte la date de la réservation, l'heure, le nombre de personnes et le nom du client. Il est impératif d'appeler cet outil immédiatement après que le client a confirmé sa réservation. Génère un identifiant unique pour chaque réservation et fournis-le au client.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"date_reservation\": {\n        \"type\": \"string\",\n        \"description\": \"La date de la réservation.\"\n      },\n      \"heure_reservation\": {\n        \"type\": \"string\",\n        \"description\": \"L'heure de la réservation (ex: '19:30').\"\n      },\n      \"nombre_personnes\": {\n        \"type\": \"integer\",\n        \"description\": \"Le nombre de personnes pour la réservation de table.\"\n      },\n      \"nom_client\": {\n        \"type\": \"string\",\n        \"description\": \"Le nom complet du client qui effectue la réservation.\"\n      },\n      \"id_reservation\": {\n        \"type\": \"string\",\n        \"description\": \"Un identifiant unique généré pour cette réservation ().\"\n      },\n      \"statut_reservation\": {\n        \"type\": \"string\",\n        \"description\": \"Le statut initial de la réservation, qui doit toujours être 'Confirmée'.\"\n      }\n    },\n    \"required\": [\"date_reservation\", \"heure_reservation\", \"nombre_personnes\", \"nom_client\", \"id_reservation\", \"statut_reservation\"]\n  }\n}",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY",
+          "mode": "list",
+          "cachedResultName": "Base_Bahia_Cabana",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 41598949,
+          "mode": "list",
+          "cachedResultName": "Reservations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/106UF8nlMzskogbTtvig7FqYt6365ZaLAXlfXnnkS7wY/edit#gid=41598949"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom du client": "={{ $fromAI('Nom_du_client', ``, 'string') }}",
+            "ID Reservation": "={{ $fromAI('ID_Reservation__using_to_match_', ``, 'string') }}",
+            "Heure et Date reservé": "={{ $fromAI('Heure_et_Date_reserv_', ``, 'string') }}",
+            "Plat/boisson reserve": "={{ $fromAI('Plat_boisson_reserve', ``, 'string') }}",
+            "Nb Personnes": "={{ $fromAI('Nb_Personnes', ``, 'string') }}",
+            "Téléphone": "={{ $fromAI('T_l_phone', ``, 'string') }}",
+            "Statut": "={{ $fromAI('Statut', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "ID Reservation"
+          ],
+          "schema": [
+            {
+              "id": "ID Reservation",
+              "displayName": "ID Reservation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Heure et Date reservé",
+              "displayName": "Heure et Date reservé",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Plat/boisson reserve",
+              "displayName": "Plat/boisson reserve",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nb Personnes",
+              "displayName": "Nb Personnes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom du client",
+              "displayName": "Nom du client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Téléphone",
+              "displayName": "Téléphone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Statut",
+              "displayName": "Statut",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "2e52f38b-7475-4bda-8e8a-0b43555a8e31",
+      "name": "Append or update row in sheet in Google Sheets1",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        416,
+        48
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KfenOzqIBushaAiR",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        -144
+      ],
+      "id": "29177c82-f4ff-4797-be3d-76207e4ff3e7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-back-up",
+  "repo_owner": "BotBj",
+  "repo_path": "myn8n/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-18T09:13:29.701Z",
+      "updatedAt": "2025-08-18T09:13:29.701Z",
+      "role": "workflow:owner",
+      "workflowId": "0jXUFvFLo6SE7hDM",
+      "projectId": "rtwT9HNaRzX30hVn"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-08-18T09:05:45.373Z",
+      "updatedAt": "2025-08-18T09:05:45.373Z",
+      "id": "ovwJLvuC8tEt5uJy",
+      "name": "Pro"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-02T15:51:23.000Z",
+  "versionId": "bdd2caca-7cee-47d8-91bf-7fa3a473e7d6"
+}
