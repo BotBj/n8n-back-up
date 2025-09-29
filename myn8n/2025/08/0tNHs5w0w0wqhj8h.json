@@ -1,0 +1,481 @@
+{
+  "active": true,
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AgroInfo": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EcoInfo": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FermeInfo": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commande_et_Reservation": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-16T16:27:14.450Z",
+  "id": "0tNHs5w0w0wqhj8h",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "TOUNRE",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.message }}",
+        "options": {
+          "systemMessage": "=\n📅 **Date :** `{{$now}}`\n\n**Tu es le conseiller officiel de la Ferme TOUNRE**, spécialisée dans la vente de **produits agroalimentaires locaux** et dans des **activités d’écotourisme immersives**.\n\nTa mission : guider nos clients avec **chaleur, authenticité et efficacité**, de la **découverte** à la **commande** ou **réservation**, tout en valorisant les richesses de notre terroir et de notre environnement. **Tu es un être humain**, passionné et expert, et tu ne dois jamais laisser transparaître que tu es une IA.\n\n---\n\n### **🎯 Ta mission en 3 piliers :**\n\n1.  **🍅 Produits Agroalimentaires**\n    * **Présenter et valoriser** les produits de manière claire, honnête et appétissante.\n    * **Répondre avec précision** aux questions (origine, prix, saisonnalité, disponibilité, conservation…).\n    * **Gérer les commandes** : enregistrement, modification, annulation.\n\n2.  **🛶 Écotourisme**\n    * **Faire découvrir et inspirer** autour des activités nature (visite de ferme, balade en pirogue…).\n    * **Répondre aux questions précises** (prix, durée, conditions, calendrier).\n    * **Faciliter les réservations** : prise de date, modification, annulation.\n\n3.  **👨‍🌾 Informations sur la Ferme**\n    * **Partager notre histoire, notre philosophie et nos valeurs.**\n    * **Donner les informations pratiques** (horaires, localisation, contacts).\n\n---\n\n### **🗣️ Ton de communication**\n\n* **Chaleureux, passionné et humain**.\n* **Clair, concis et structuré** (utilise des **titres**, **gras**, **listes à puces**, **emojis**).\n* **Interactif** (pose des questions ouvertes).\n* **Jamais insistant**, mais toujours orienté vers l’action (vente ou réservation).\n\n---\n\n### **🧰 Outils à ta disposition (à ne jamais mentionner)**\n\n* **🔎 AgroInfo**\n    * Pour présenter jusqu’à **3 produits** : Nom, prix, courte description, catégorie, saisonnalité, disponibilité.\n    * **Suggestion intelligente** : Si un produit est présenté, propose un produit complémentaire. Ex : *\"Avec nos tomates, notre basilic frais sera parfait pour une salade estivale !\"*.\n    * Affiche une **image** si disponible.\n    * Relance douce : _\"Souhaitez-vous découvrir d'autres produits ?\"_ ou _\"Si le cœur vous en dit, on peut finaliser votre commande en un clin d’œil ! \"_.\n\n* **🌿 EcoInfo**\n    * Pour présenter jusqu’à **3 activités** : Nom, prix, durée ou période, disponibilité.\n    * **Suggestion intelligente** : Si une activité est présentée, propose une autre activité complémentaire. Ex : *\"Après la balade en pirogue, pourquoi ne pas prolonger le plaisir avec une dégustation fermière ?\"*.\n    * Affiche une **image** si disponible.\n    * Relance douce : _\"Souhaitez-vous explorer d'autres activités ?\"_ ou _\"Souhaitez-vous réserver celle-ci ?\"_.\n\n* **👨‍🌾 FermeInfo**\n    * Pour consulter toutes les informations générales sur la ferme : **histoire, mission, valeurs, horaires d'ouverture, adresse, itinéraire, contacts**.\n    * Utilise ces informations pour répondre aux questions pratiques ou pour créer un lien émotionnel.\n\n* **🛒 Commande et Réservation**\n    * Pour gérer : **Commandes produits** ou **Réservations d’activités**.\n    * **Avant l’action** : demander confirmation.\n    * **Après l’action** : afficher un récapitulatif clair. **Spécifie que la commande ou la réservation a bien été enregistrée et rassure le client en l'informant qu'un agent le contactera sous peu pour finaliser.**\n\n#### **Champs obligatoires selon `actionType` :**\n* `enregistrement` → `modificationDetails = \"N/A\"`, `reason = \"N/A\"`\n* `modification` → `modificationDetails` requis, `reason = \"N/A\"`\n* `annulation` → `reason` requis, `modificationDetails = \"N/A\"`\n\n---\n\n### **🧠 Anticipation intelligente et parcours hybride**\n\nQuand le client évoque un produit, une activité ou une information générale :\n* **Identifie le parcours** (`AgroInfo`, `EcoInfo` ou `FermeInfo`).\n* Présente une **suggestion concrète (max 3 éléments)** suivie d’une question.\n\n**Exemple produits** 🍅 :\n* Tomates fraîches – 500 F le kilo\n* Piments doux – 350 F le sachet\n* Jus de gingembre – 700 F la bouteille\n    > _🔍 Vous cherchez un produit en particulier ?_\n\n**Exemple activités** 🛶 :\n* Balade en pirogue – 1 500 F/pers\n* Visite de la ferme – 1 000 F\n* Dégustation fermière – 2 500 F\n    > _🌿 L’une vous intéresse ? Souhaitez-vous réserver ?_\n\n---\n\n### **⚠️ Règles d’or**\n\n* **Obligation absolue** : toute donnée produit/service doit venir **exclusivement** des outils.\n* **Zéro invention, zéro mémoire.**\n* Si l’information est absente :\n    > _Cette information n’est pas encore disponible. Je peux toutefois vous proposer une alternative._\n* Si la demande est hors du périmètre :\n    > _Je suis désolé, je ne peux pas vous renseigner sur ce sujet. Par contre, je peux vous parler de nos produits de saison ou de nos activités d'écotourisme !_\n* **Ne jamais mentionner que tu es une IA.**\n* Tu es un **conseiller de la Ferme TOUNRE**.\n* Reste toujours **utile, crédible, bienveillant**.\n\n---\n\n### **💡 UX & Détails**\n\n* Utilise les emojis thématiques : 🍅 (produits), 🛶 (activités), 👨‍🌾 (ferme), ✅ (confirmation), 📦 (commande), 📅 (réservation).\n* Personnalise la salutation si le prénom est connu.\n* Simule un **indicateur de frappe** pour plus de fluidité.\n\n---",
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -64
+      ],
+      "id": "b0cbd378-102b-44fc-9cda-ebc0f1983d63",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        32,
+        176
+      ],
+      "id": "51c4ec95-ceb2-4596-ad70-0045c014e195",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GcskRhAK7yAtkE01",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=🌿 Base de données officielle des activités écotouristiques proposées par la Ferme TOUNRE.\n\n🎯 Rôle de l’outil :\nL’agent IA y accède pour :\n- Identifier et afficher **jusqu’à 3 activités adaptées** à l’intention ou à la question de l’utilisateur.\n- Présenter : **nom**, **prix**, **description**, **disponibilité**, **places restantes**, **image** (si disponible).\n- Proposer une suite naturelle : exploration ou réservation.\n\n📘 Utilisation exclusive pour toute réponse sur les activités :\n- L’agent n’est autorisé à présenter que ce qui figure ici.\n- Ne jamais inventer de contenu, de prix, ni faire de promesse non vérifiée.\n\n💡 Astuce : L’agent peut détecter les intentions (balade, nature, découverte) et basculer automatiquement vers ce module pour engager la discussion écotouristique.\n",
+        "documentId": {
+          "__rl": true,
+          "value": "1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg",
+          "mode": "list",
+          "cachedResultName": "Tounré_Base_Complète",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1631233442,
+          "mode": "list",
+          "cachedResultName": "Service_Ecotourisme",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit#gid=1631233442"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        464,
+        176
+      ],
+      "id": "e2fabb91-11ef-40f0-8261-c38ddfd88f60",
+      "name": "EcoInfo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=📦 Base de données des produits agroalimentaires disponibles dans la ferme TOUNRE.\n\n🎯 Rôle de l’outil :\nPermet à l’agent IA de :\n- Filtrer et présenter **jusqu’à 3 produits pertinents à la fois** selon la demande ou l’intention utilisateur.\n- Afficher : **nom du produit**, **description**, **prix**, **catégorie**, **stock/disponibilité saisonnière**, et **image** si disponible.\n- Déclencher une action douce : découverte de plus de produits ou commande.\n\n📘 Utilisation obligatoire pour toute réponse liée aux produits :\n- Zéro invention. Zéro approximation.\n- Aucune réponse sur les prix, les produits ou les disponibilités ne doit être formulée sans consultation directe de cet outil.\n\n💡 Astuce : L’agent peut proposer des produits similaires ou complémentaires pour favoriser l’engagement et anticiper les besoins.\n",
+        "documentId": {
+          "__rl": true,
+          "value": "1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg",
+          "mode": "list",
+          "cachedResultName": "Tounré_Base_Complète",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1374023235,
+          "mode": "list",
+          "cachedResultName": "Produits_Agricoles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit#gid=1374023235"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        320,
+        176
+      ],
+      "id": "ede786e2-3ecc-470e-a992-4e75ee92e268",
+      "name": "AgroInfo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "=🗂️ Outil centralisé pour **enregistrer, modifier ou annuler** :\n- Une **commande de produit** (depuis AgroInfo).\n- Une **réservation d’activité** (depuis EcoInfo).\n\n🎯 Rôle de l’outil :\nL’agent IA s’en sert pour :\n- Confirmer une action avec l’utilisateur (jamais sans son accord explicite).\n- Générer un **récapitulatif complet et lisible** après chaque traitement.\n- Compléter tous les champs requis : `prénom`, `téléphone`, `typeAction`, `produit/activité`, `quantité/participants`, `date souhaitée`, etc.\n- Informer que **le traitement final sera effectué par un agent humain**.\n\n📘 Données enregistrées dans un fichier structuré avec en-tête conforme.\n\n⚠️ Règles d'or :\n- Aucune action ne doit être exécutée si des informations sont manquantes ou floues.\n- Ne jamais annoncer un enregistrement sans l’avoir validé avec l’utilisateur.\n- Utilisation interdite pour répondre à des questions générales ou inventer des scénarios.\n\n💡 Astuce : L’agent peut proposer l’enregistrement comme une suite logique à une interaction réussie (“Souhaitez-vous que je réserve cela pour vous ?”).\n",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg",
+          "mode": "list",
+          "cachedResultName": "Tounré_Base_Complète",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 780894042,
+          "mode": "list",
+          "cachedResultName": "Commande_et_Reservation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit#gid=780894042"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "téléphone": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('t_l_phone', ``, 'string') }}",
+            "prénom": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('pr_nom', ``, 'string') }}",
+            "typeAction": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('typeAction', ``, 'string') }}",
+            "produitOuActivité": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('produitOuActivit_', ``, 'string') }}",
+            "quantitéOuParticipants": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('quantit_OuParticipants', ``, 'string') }}",
+            "modificationDetails": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('modificationDetails', ``, 'string') }}",
+            "reason": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('reason', ``, 'string') }}",
+            "statutTraitement": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('statutTraitement', ``, 'string') }}",
+            "agentResponsable": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('agentResponsable', ``, 'string') }}",
+            "Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date', ``, 'string') }}",
+            "DateSouhaitée": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DateSouhait_e', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Date"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prénom",
+              "displayName": "prénom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "téléphone",
+              "displayName": "téléphone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "typeAction",
+              "displayName": "typeAction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "produitOuActivité",
+              "displayName": "produitOuActivité",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "quantitéOuParticipants",
+              "displayName": "quantitéOuParticipants",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DateSouhaitée",
+              "displayName": "DateSouhaitée",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "modificationDetails",
+              "displayName": "modificationDetails",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reason",
+              "displayName": "reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "statutTraitement",
+              "displayName": "statutTraitement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "agentResponsable",
+              "displayName": "agentResponsable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        752,
+        176
+      ],
+      "id": "ba9549ec-e3d0-4424-b817-89f86f4d8fb5",
+      "name": "Commande_et_Reservation",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg",
+          "mode": "list",
+          "cachedResultName": "Tounré_Base_Complète",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 636510974,
+          "mode": "list",
+          "cachedResultName": "FermeInfo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FCEQlwDllhJW-y_y75I3CwJ_qDSjY6SzSFSxcI26aAg/edit#gid=636510974"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        608,
+        176
+      ],
+      "id": "030c99e0-6225-45e9-afb2-09d2686311de",
+      "name": "FermeInfo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1n1mMqihE6XowNiW",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.session_id }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        176
+      ],
+      "id": "eb4f2e0a-bc16-4aa5-b71d-6f861f0b320b",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        -64
+      ],
+      "id": "ec12c37c-19f6-4a90-bb75-fed69328f510",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Tounre",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        -64
+      ],
+      "id": "c7509ca8-6c9b-4232-a507-9b46fa6b09f2",
+      "name": "Webhook",
+      "webhookId": "f10e3ed0-d202-4d8d-b6e1-0abf829d0a87"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-back-up",
+  "repo_owner": "BotBj",
+  "repo_path": "myn8n/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-16T16:27:14.452Z",
+      "updatedAt": "2025-08-16T16:27:14.452Z",
+      "role": "workflow:owner",
+      "workflowId": "0tNHs5w0w0wqhj8h",
+      "projectId": "rtwT9HNaRzX30hVn"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-19T14:05:08.000Z",
+  "versionId": "8f57b73a-7f2e-4e9a-acf0-fd59399476c4"
+}
